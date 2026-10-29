@@ -1,0 +1,1905 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KOCHBRATAN — Настоящая Анархия Minecraft</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Pixel & Blocky Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rubik+Mono+One&family=Silkscreen:wght@400;700&family=JetBrains+Mono:wght@500;700;800&family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --mc-bg: #09080c;
+            --mc-gui-dark: #1e1e24;
+            --mc-gui-slot: #8b8b8b;
+            --mc-tooltip-bg: rgba(16, 0, 16, 0.96);
+            --mc-tooltip-border: #5000ff;
+            --mc-crimson: #dc2626;
+            --mc-gold: #ffaa00;
+            --mc-green: #55ff55;
+            --mc-aqua: #55ffff;
+            --mc-red: #ff5555;
+            --cdn-primary: url('https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/block/deepslate_bricks.png');
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--mc-bg);
+            background-image: 
+                linear-gradient(to bottom, rgba(9, 8, 12, 0.88), rgba(9, 8, 12, 0.94)),
+                url('https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/block/deepslate_bricks.png');
+            background-size: cover, 64px 64px;
+            background-attachment: fixed;
+            image-rendering: pixelated;
+            color: #e5e7eb;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            cursor: crosshair;
+        }
+
+        .font-pixel {
+            font-family: 'Press Start 2P', monospace;
+            image-rendering: pixelated;
+        }
+
+        .font-mc {
+            font-family: 'Silkscreen', monospace;
+        }
+
+        .font-blocky {
+            font-family: 'Rubik Mono One', sans-serif;
+        }
+
+        .pixelated {
+            image-rendering: pixelated !important;
+            image-rendering: -moz-crisp-edges !important;
+            image-rendering: crisp-edges !important;
+        }
+
+        /* ==========================================
+           3D MINECRAFT EXTRUDED HERO TITLE
+           ========================================== */
+        .mc-hero-logo {
+            font-family: 'Rubik Mono One', 'Press Start 2P', sans-serif;
+            letter-spacing: 0.04em;
+            background: linear-gradient(180deg, #fff7ed 0%, #fde047 22%, #f97316 58%, #dc2626 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0px 3px 0px #7c2d12)
+                    drop-shadow(0px 6px 0px #450a0a)
+                    drop-shadow(0px 9px 0px #1f0404)
+                    drop-shadow(0px 14px 25px rgba(220, 38, 38, 0.65));
+            transform: perspective(600px) rotateX(10deg);
+            user-select: none;
+        }
+
+        @keyframes mcSplashBounce {
+            0%, 100% { transform: rotate(-11deg) scale(1); }
+            50% { transform: rotate(-11deg) scale(1.09); }
+        }
+
+        .mc-splash {
+            color: #ffff55;
+            text-shadow: 2px 2px 0px #3f3f00;
+            animation: mcSplashBounce 1.15s infinite ease-in-out;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        /* ==========================================
+           TRUE 3D ISOMETRIC CSS MINECRAFT CUBE
+           WITH REAL VANILLA TEXTURES & DIRECTIONAL SHADING
+           ========================================== */
+        .scene-3d-sm {
+            width: 48px;
+            height: 48px;
+            perspective: 400px;
+        }
+
+        .scene-3d-lg {
+            width: 116px;
+            height: 116px;
+            perspective: 650px;
+        }
+
+        .mc-cube {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotateCube 12s infinite linear;
+        }
+
+        .mc-cube:hover {
+            animation-duration: 3.5s;
+        }
+
+        @keyframes rotateCube {
+            0%   { transform: rotateX(-24deg) rotateY(0deg); }
+            100% { transform: rotateX(-24deg) rotateY(360deg); }
+        }
+
+        .mc-cube-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            image-rendering: pixelated !important;
+            image-rendering: crisp-edges !important;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.35);
+            backface-visibility: hidden;
+        }
+
+        /* Small Navbar Cube (44px) */
+        .cube-sm { width: 44px; height: 44px; }
+        .cube-sm .face-front  { transform: rotateY(0deg) translateZ(22px); filter: brightness(0.95); }
+        .cube-sm .face-back   { transform: rotateY(180deg) translateZ(22px); filter: brightness(0.75); }
+        .cube-sm .face-right  { transform: rotateY(90deg) translateZ(22px); filter: brightness(0.85); }
+        .cube-sm .face-left   { transform: rotateY(-90deg) translateZ(22px); filter: brightness(0.72); }
+        .cube-sm .face-top    { transform: rotateX(90deg) translateZ(22px); filter: brightness(1.12); }
+        .cube-sm .face-bottom { transform: rotateX(-90deg) translateZ(22px); filter: brightness(0.55); }
+
+        /* Large Hero Cube (100px) */
+        .cube-lg { width: 100px; height: 100px; }
+        .cube-lg .face-front  { transform: rotateY(0deg) translateZ(50px); filter: brightness(0.95); }
+        .cube-lg .face-back   { transform: rotateY(180deg) translateZ(50px); filter: brightness(0.75); }
+        .cube-lg .face-right  { transform: rotateY(90deg) translateZ(50px); filter: brightness(0.85); }
+        .cube-lg .face-left   { transform: rotateY(-90deg) translateZ(50px); filter: brightness(0.72); }
+        .cube-lg .face-top    { transform: rotateX(90deg) translateZ(50px); filter: brightness(1.12); }
+        .cube-lg .face-bottom { transform: rotateX(-90deg) translateZ(50px); filter: brightness(0.55); }
+
+        /* ==========================================
+           AUTHENTIC MINECRAFT UI BUTTONS & SLOTS
+           ========================================== */
+        .mc-btn {
+            position: relative;
+            background-color: #6e6e6e;
+            background-image: 
+                linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+                url('https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/block/stone.png');
+            background-size: cover, 32px 32px;
+            image-rendering: pixelated;
+            border-top: 3px solid #aaaaaa;
+            border-left: 3px solid #aaaaaa;
+            border-right: 3px solid #333333;
+            border-bottom: 3px solid #333333;
+            box-shadow: 0 0 0 2px #000000, 0 5px 0 #000000;
+            color: #ffffff;
+            text-shadow: 2px 2px 0px #1f1f1f;
+            transition: transform 0.06s ease, filter 0.1s ease, border-color 0.1s ease;
+            user-select: none;
+        }
+
+        .mc-btn:hover {
+            filter: brightness(1.15);
+            border-top-color: #ffffff;
+            border-left-color: #ffffff;
+            color: #ffff55;
+        }
+
+        .mc-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 0 0 2px #000000, 0 2px 0 #000000;
+            border-top-color: #333333;
+            border-left-color: #333333;
+            border-right-color: #aaaaaa;
+            border-bottom-color: #aaaaaa;
+        }
+
+        .mc-btn-crimson {
+            background-color: #991b1b;
+            background-image: 
+                linear-gradient(rgba(153, 27, 27, 0.72), rgba(127, 29, 29, 0.82)),
+                url('https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/block/crimson_planks.png');
+            background-size: cover, 32px 32px;
+            border-top: 3px solid #f87171;
+            border-left: 3px solid #f87171;
+            border-right: 3px solid #450a0a;
+            border-bottom: 3px solid #450a0a;
+            box-shadow: 0 0 0 2px #000000, 0 5px 0 #000000, 0 0 25px rgba(220, 38, 38, 0.4);
+            color: #ffffff;
+            text-shadow: 2px 2px 0px #450a0a;
+        }
+
+        .mc-btn-gold {
+            background-color: #b45309;
+            background-image: 
+                linear-gradient(rgba(180, 83, 9, 0.72), rgba(120, 53, 15, 0.85)),
+                url('https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/block/gilded_blackstone.png');
+            background-size: cover, 32px 32px;
+            border-top: 3px solid #fde047;
+            border-left: 3px solid #fde047;
+            border-right: 3px solid #451a03;
+            border-bottom: 3px solid #451a03;
+            box-shadow: 0 0 0 2px #000000, 0 5px 0 #000000;
+            color: #ffffff;
+            text-shadow: 2px 2px 0px #451a03;
+        }
+
+        /* ==========================================
+           MINECRAFT GUI WINDOWS & INVENTORY SLOTS
+           ========================================== */
+        .mc-window {
+            background-color: #1c1b22;
+            background-image: 
+                linear-gradient(rgba(22, 21, 28, 0.92), rgba(16, 15, 22, 0.95)),
+                url('https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/block/polished_blackstone.png');
+            background-size: cover, 48px 48px;
+            image-rendering: pixelated;
+            border-top: 4px solid #4a4857;
+            border-left: 4px solid #4a4857;
+            border-right: 4px solid #0f0e13;
+            border-bottom: 4px solid #0f0e13;
+            box-shadow: 0 0 0 3px #000000, 0 20px 50px rgba(0, 0, 0, 0.85);
+            position: relative;
+        }
+
+        /* Recessed Vanilla Deepslate / Obsidian Server List Background */
+        .mc-server-list-bg {
+            background-color: #0b0a0e;
+            background-image: 
+                linear-gradient(rgba(8, 7, 12, 0.78), rgba(8, 7, 12, 0.84)),
+                url('https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/block/obsidian.png');
+            background-size: cover, 48px 48px;
+            image-rendering: pixelated;
+            border-top: 3px solid #050507;
+            border-left: 3px solid #050507;
+            border-right: 3px solid #3a3847;
+            border-bottom: 3px solid #3a3847;
+            box-shadow: inset 0 6px 20px rgba(0,0,0,0.95);
+        }
+
+        .mc-server-slot {
+            border: 2px solid #525063;
+            background: rgba(14, 13, 19, 0.9);
+            transition: border-color 0.15s ease, background-color 0.15s ease;
+        }
+
+        .mc-server-slot:hover, .mc-server-slot.selected {
+            border-color: #ffffff;
+            background: rgba(24, 22, 33, 0.96);
+            box-shadow: inset 0 0 0 2px #000000;
+        }
+
+        /* Authentic Vanilla Inventory Slot Bevel */
+        .mc-inv-slot {
+            width: 64px;
+            height: 64px;
+            background-color: #363540;
+            border-top: 3px solid #18171c;
+            border-left: 3px solid #18171c;
+            border-right: 3px solid #727082;
+            border-bottom: 3px solid #727082;
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.65);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.08s ease, background-color 0.1s ease;
+            user-select: none;
+        }
+
+        .mc-inv-slot:hover {
+            background-color: #4b4958;
+        }
+
+        .mc-inv-slot.active-slot {
+            background-color: #4c2228;
+            outline: 3px solid #ffffff;
+            outline-offset: -2px;
+            box-shadow: 0 0 0 2px #000000, 0 0 20px rgba(239, 68, 68, 0.65), inset 0 0 12px rgba(239, 68, 68, 0.45);
+            z-index: 10;
+            transform: scale(1.07);
+        }
+
+        /* Authentic Minecraft Enchanted Item Purple Glint Effect */
+        @keyframes glintSweep {
+            0% { background-position: -200% -200%; }
+            100% { background-position: 200% 200%; }
+        }
+
+        .mc-enchanted-glint {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mc-enchanted-glint::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                115deg,
+                transparent 25%,
+                rgba(168, 85, 247, 0.42) 44%,
+                rgba(236, 72, 153, 0.6) 50%,
+                rgba(168, 85, 247, 0.42) 56%,
+                transparent 75%
+            );
+            background-size: 220% 220%;
+            mix-blend-mode: screen;
+            animation: glintSweep 2.8s infinite linear;
+            pointer-events: none;
+        }
+
+        /* ==========================================
+           GLOBAL FLOATING MINECRAFT ITEM TOOLTIP
+           ========================================== */
+        #mcGlobalTooltip {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: rgba(16, 0, 16, 0.96);
+            border: 3px solid #2b0666;
+            box-shadow: 
+                inset 0 0 0 2px #5000ff,
+                0 0 0 2px #100010,
+                0 12px 30px rgba(0, 0, 0, 0.95);
+            padding: 8px 12px;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.08s ease;
+            max-width: 340px;
+            font-family: 'Silkscreen', monospace;
+        }
+
+        #mcGlobalTooltip.visible {
+            opacity: 1;
+        }
+
+        /* ==========================================
+           MINECRAFT WITHER BOSSBAR (TOP OF PAGE)
+           ========================================== */
+        .mc-bossbar-track {
+            height: 12px;
+            background: #230929;
+            border: 2px solid #09030b;
+            box-shadow: inset 0 2px 0 #140417, 0 1px 0 rgba(255,255,255,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mc-bossbar-fill {
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, #dc2626 0%, #db2777 50%, #9333ea 100%);
+            box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.35);
+            position: relative;
+        }
+
+        .mc-bossbar-notches {
+            position: absolute;
+            inset: 0;
+            background-image: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent calc(10% - 2px),
+                #09030b calc(10% - 2px),
+                #09030b 10%
+            );
+            pointer-events: none;
+        }
+
+        /* ==========================================
+           MINECRAFT ADVANCEMENT TOAST (TOP RIGHT)
+           ========================================== */
+        #mcAdvancementToast {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 9990;
+            background-color: #212121;
+            border-top: 3px solid #555555;
+            border-left: 3px solid #555555;
+            border-right: 3px solid #111111;
+            border-bottom: 3px solid #111111;
+            box-shadow: 0 0 0 2px #000, 0 15px 35px rgba(0,0,0,0.9);
+            padding: 12px 18px;
+            transform: translateX(130%);
+            transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        }
+
+        #mcAdvancementToast.show {
+            transform: translateX(0);
+        }
+
+        /* Block Switcher Pill */
+        .block-pill {
+            background-color: #16151d;
+            border: 2px solid #353346;
+            transition: all 0.12s ease;
+        }
+        .block-pill:hover {
+            border-color: #a855f7;
+            color: #ffff55;
+        }
+        .block-pill.active {
+            background-color: #3b1922;
+            border-color: #f87171;
+            color: #ffff55;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.45);
+        }
+    </style>
+</head>
+<body class="selection:bg-red-600 selection:text-yellow-300">
+
+    <!-- GLOBAL MINECRAFT ITEM TOOLTIP (Follows Cursor) -->
+    <div id="mcGlobalTooltip">
+        <div id="tooltipTitle" class="text-xs sm:text-sm font-bold tracking-wide mb-1 text-[#ff55ff]"></div>
+        <div id="tooltipLore" class="text-[11px] leading-snug space-y-0.5 text-gray-300"></div>
+    </div>
+
+    <!-- MINECRAFT ADVANCEMENT TOAST ("Достижение получено!" with real Nether Star texture) -->
+    <div id="mcAdvancementToast" class="flex items-center space-x-3.5">
+        <div class="w-11 h-11 bg-[#141418] border-2 border-[#3a3a46] flex items-center justify-center shrink-0 mc-enchanted-glint">
+            <img src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/item/nether_star.png"
+                 onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.4/assets/minecraft/textures/item/nether_star.png'"
+                 alt="Nether Star" class="w-8 h-8 pixelated">
+        </div>
+        <div>
+            <div class="font-pixel text-[10px] text-[#ffff55] tracking-wider uppercase drop-shadow-[1px_1px_0_#000]">Достижение получено!</div>
+            <div id="advancementText" class="font-mc text-xs sm:text-sm text-white font-bold mt-0.5">Айпи скопирован: kochbratan.wellduck.org</div>
+        </div>
+    </div>
+
+    <!-- BACKGROUND NETHER EMBER & PORTAL CANVAS -->
+    <canvas id="netherCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+    <!-- ==========================================
+         TOP WITHER BOSSBAR (AUTHENTIC MINECRAFT HUD)
+         ========================================== -->
+    <div class="relative z-40 bg-[#0b0710]/95 border-b border-[#261736] pt-2 pb-2.5 px-4">
+        <div class="max-w-3xl mx-auto text-center">
+            <div class="font-mc text-[11px] sm:text-xs tracking-wider mb-1.5 flex items-center justify-center flex-wrap gap-x-2">
+                <span class="text-[#ff5555] font-bold drop-shadow-[1px_1px_0_#000]">☠ KOCHBRATAN ANARCHY</span>
+                <span class="text-gray-500">—</span>
+                <span class="text-[#ffff55] drop-shadow-[1px_1px_0_#000]">АНАРХИЯ БЕЗ ПРАВИЛ</span>
+                <span class="hidden sm:inline text-gray-500">•</span>
+                <span class="hidden sm:inline text-[#ffaa00] drop-shadow-[1px_1px_0_#000]">ТОЛЬКО БЕЗ ЧИТОВ И ЛАГ-МАШИН</span>
+            </div>
+            <div class="mc-bossbar-track max-w-xl mx-auto">
+                <div id="bossbarFill" class="mc-bossbar-fill transition-all duration-500"></div>
+                <div class="mc-bossbar-notches"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         STICKY NAVIGATION BAR WITH REAL 3D BLOCK LOGO
+         ========================================== -->
+    <header class="sticky top-0 z-50 bg-[#0d0c12]/90 backdrop-blur-md border-b-4 border-[#1f1d29] shadow-[0_6px_25px_rgba(0,0,0,0.85)]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+            
+            <!-- Brand Logo: True 3D Isometric Rotating Block with Official Vanilla Textures -->
+            <a href="#" onclick="cycleCubeTexture(event)" 
+               data-mc-title="§d§l3D-Блок Кочбратана" 
+               data-mc-lore="§7Официальная ванильная текстура 1.20.4|§eКликни, чтобы сменить блок!|§8TNT / Обсидиан / Якорь / Бедрок"
+               class="flex items-center space-x-3.5 group">
+                <div class="scene-3d-sm flex items-center justify-center">
+                    <div class="mc-cube cube-sm" id="navCube">
+                        <div class="mc-cube-face face-front"></div>
+                        <div class="mc-cube-face face-back"></div>
+                        <div class="mc-cube-face face-right"></div>
+                        <div class="mc-cube-face face-left"></div>
+                        <div class="mc-cube-face face-top"></div>
+                        <div class="mc-cube-face face-bottom"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="font-pixel text-sm sm:text-base text-white tracking-wider group-hover:text-[#ffff55] transition-colors drop-shadow-[2px_2px_0_#000]">
+                        KOCHBRATAN
+                    </div>
+                    <div class="flex items-center space-x-1.5 mt-0.5">
+                        <span id="navStatusDot" class="w-2 h-2 bg-yellow-400 inline-block"></span>
+                        <span id="navOnlineBadge" class="font-mc text-[10px] text-gray-300 tracking-wider uppercase">ЗАГРУЗКА ОНЛАЙНА...</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="hidden lg:flex items-center space-x-6 font-mc text-xs text-gray-300">
+                <a href="#server-list" class="hover:text-[#ffff55] transition-colors py-1">[ МОНИТОРИНГ ]</a>
+                <a href="#inventory-section" class="hover:text-[#ffff55] transition-colors py-1">[ ИНВЕНТАРЬ АНАРХИИ ]</a>
+                <a href="#rules-section" class="hover:text-[#ff5555] transition-colors py-1">[ 2 ПРАВИЛА ]</a>
+                <a href="#connect-section" class="hover:text-[#55ffff] transition-colors py-1">[ КАК ЗАЙТИ ]</a>
+            </nav>
+
+            <!-- Right Controls: Sound Toggle + Copy IP -->
+            <div class="flex items-center space-x-3">
+                <button id="soundToggleBtn" onclick="toggleSound()" 
+                        data-mc-title="§eЗвуки Minecraft UI" 
+                        data-mc-lore="§7Синтез звуков клика и опыта|§aСтатус: ВКЛ"
+                        class="mc-btn px-3 py-2.5 text-xs font-mc flex items-center justify-center" aria-label="Toggle Sound">
+                    <span id="soundIcon">🔊</span>
+                </button>
+
+                <button onclick="copyIp('kochbratan.wellduck.org', 'Доменный IP')"
+                        data-mc-title="§6§lСкопировать основной IP"
+                        data-mc-lore="§fkochbratan.wellduck.org|§7Резервный: §e213.171.18.152:32086|§aНажми для копирования!"
+                        class="mc-btn mc-btn-crimson px-4 py-2.5 font-pixel text-[10px] sm:text-xs tracking-wider flex items-center space-x-2">
+                    <img src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/item/diamond.png"
+                         onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.4/assets/minecraft/textures/item/diamond.png'"
+                         alt="" class="w-4 h-4 pixelated">
+                    <span>ИГРАТЬ</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==========================================
+         MAIN CONTENT
+         ========================================== -->
+    <main class="relative z-10">
+
+        <!-- HERO SECTION -->
+        <section class="relative pt-8 sm:pt-14 pb-16 px-4 overflow-hidden">
+            <!-- Subtle Radial Nether Glow -->
+            <div class="absolute top-10 left-1/2 -translate-x-1/2 w-[650px] h-[360px] bg-red-600/15 blur-[130px] pointer-events-none"></div>
+
+            <div class="max-w-6xl mx-auto text-center relative">
+                
+                <!-- Interactive 3D Hero Block Showcase with Official Vanilla Textures -->
+                <div class="flex flex-col items-center justify-center mb-6">
+                    <div onclick="cycleCubeTexture(event)" 
+                         data-mc-title="§c§lНастоящий 3D-Блок Minecraft (Кликни!)" 
+                         data-mc-lore="§7Официальные текстуры блоков 1.20.4|§eНажми на куб или кнопки ниже,|§eчтобы сменить 3D-блок!"
+                         class="scene-3d-lg cursor-pointer group relative flex items-center justify-center mb-5">
+                        <!-- Red Glow Aura under 3D Cube -->
+                        <div class="absolute -inset-4 bg-red-600/25 rounded-full blur-xl group-hover:bg-orange-500/40 transition-all"></div>
+                        <div class="mc-cube cube-lg" id="heroCube">
+                            <div class="mc-cube-face face-front"></div>
+                            <div class="mc-cube-face face-back"></div>
+                            <div class="mc-cube-face face-right"></div>
+                            <div class="mc-cube-face face-left"></div>
+                            <div class="mc-cube-face face-top"></div>
+                            <div class="mc-cube-face face-bottom"></div>
+                        </div>
+                    </div>
+
+                    <!-- One-Click Block Preset Switcher Buttons -->
+                    <div id="blockSwitcherContainer" class="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
+                        <!-- Populated dynamically by JS -->
+                    </div>
+                </div>
+
+                <!-- Version & Mode Tag -->
+                <div class="inline-flex items-center space-x-2 bg-[#17151f] border-2 border-[#38334a] px-3.5 py-1.5 mb-5 shadow-[4px_4px_0_#000]">
+                    <span class="w-2 h-2 bg-[#55ff55]"></span>
+                    <span class="font-pixel text-[9px] sm:text-[11px] text-[#ffaa00] tracking-widest uppercase">
+                        JAVA EDITION • АНАРХИЯ БЕЗ ПРИВАТОВ И ПРАВИЛ
+                    </span>
+                </div>
+
+                <!-- Massive 3D Extruded Minecraft Title + Yellow Bouncing Splash -->
+                <div class="relative inline-block max-w-full my-2">
+                    <h1 class="mc-hero-logo text-3xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-none px-2">
+                        KOCHBRATAN
+                    </h1>
+                    <!-- Authentic Yellow Bouncing Splash Text -->
+                    <div id="mcSplashText" onclick="nextSplashText()" 
+                         title="Кликни, чтобы сменить сплеш!"
+                         class="mc-splash font-mc text-xs sm:text-base md:text-lg font-bold absolute -bottom-5 right-0 sm:-right-8 md:-right-12 px-2 py-0.5">
+                        Никаких приватов!
+                    </div>
+                </div>
+
+                <p class="max-w-2xl mx-auto text-gray-300 text-sm sm:text-base md:text-lg mt-9 mb-10 leading-relaxed font-normal">
+                    Настоящий сервер <span class="text-red-400 font-bold">классической анархии</span>, где выживает сильнейший. Взрывай базы динамитом и кристаллами, создавай кланы, устраивай засады и прячь координаты за сотни тысяч блоков. Из правил — только <span class="text-[#ffff55] font-semibold">никаких читов</span> и <span class="text-[#ffaa00] font-semibold">никаких лаг-машин</span>.
+                </p>
+
+                <!-- ==========================================
+                     DUAL IP INTERACTIVE CARDS (WITH REAL VANILLA ITEM TEXTURES)
+                     ========================================== -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl mx-auto mb-14">
+                    
+                    <!-- Card 1: Domain IP -->
+                    <div onclick="copyIp('kochbratan.wellduck.org', 'Доменный IP')"
+                         data-mc-title="§b§lОсновной домен сервера"
+                         data-mc-lore="§7Адрес: §fkochbratan.wellduck.org|§7Автоматическое подключение|§e▶ Кликни, чтобы скопировать IP!"
+                         class="mc-window p-5 cursor-pointer group hover:border-red-500 transition-all text-left flex items-center justify-between gap-4">
+                        <div class="flex items-center space-x-4 min-w-0">
+                            <!-- Real Vanilla Ender Pearl Texture -->
+                            <div class="w-14 h-14 bg-[#121117] border-2 border-[#4a4859] flex items-center justify-center shrink-0 group-hover:border-[#55ffff] transition-colors shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
+                                <img src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/item/ender_pearl.png"
+                                     onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.4/assets/minecraft/textures/item/ender_pearl.png'"
+                                     alt="Ender Pearl" class="w-9 h-9 pixelated">
+                            </div>
+                            <div class="min-w-0">
+                                <div class="flex items-center space-x-2">
+                                    <span class="font-pixel text-[9px] text-[#55ffff] uppercase">ДОМЕННЫЙ АЙПИ</span>
+                                    <span class="bg-red-950 text-red-300 border border-red-700 font-mc text-[9px] px-1.5 py-0.2">ОСНОВНОЙ</span>
+                                </div>
+                                <div class="font-mono font-extrabold text-sm sm:text-lg text-white truncate mt-1 group-hover:text-[#ffff55] transition-colors">
+                                    kochbratan.wellduck.org
+                                </div>
+                                <div class="font-mc text-[11px] text-gray-400 mt-0.5">Нажми для мгновенного копирования</div>
+                            </div>
+                        </div>
+                        <button class="mc-btn mc-btn-crimson px-3.5 py-3 font-pixel text-[10px] shrink-0">
+                            КОПИРОВАТЬ
+                        </button>
+                    </div>
+
+                    <!-- Card 2: Direct Numeric IP + Port -->
+                    <div onclick="copyIp('213.171.18.152:32086', 'Цифровой IP с портом')"
+                         data-mc-title="§6§lПрямой цифровой IP + Порт"
+                         data-mc-lore="§7Адрес: §f213.171.18.152:32086|§7Прямой коннект в обход DNS|§e▶ Кликни, чтобы скопировать IP!"
+                         class="mc-window p-5 cursor-pointer group hover:border-amber-500 transition-all text-left flex items-center justify-between gap-4">
+                        <div class="flex items-center space-x-4 min-w-0">
+                            <!-- Real Vanilla TNT Texture -->
+                            <div class="w-14 h-14 bg-[#121117] border-2 border-[#4a4859] flex items-center justify-center shrink-0 group-hover:border-[#ffaa00] transition-colors shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
+                                <img src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/block/tnt_side.png"
+                                     onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.4/assets/minecraft/textures/block/tnt_side.png'"
+                                     alt="TNT" class="w-9 h-9 pixelated">
+                            </div>
+                            <div class="min-w-0">
+                                <div class="flex items-center space-x-2">
+                                    <span class="font-pixel text-[9px] text-[#ffaa00] uppercase">ПРЯМОЙ IP (С ПОРТОМ)</span>
+                                    <span class="bg-amber-950 text-amber-300 border border-amber-700 font-mc text-[9px] px-1.5 py-0.2">DIRECT</span>
+                                </div>
+                                <div class="font-mono font-extrabold text-sm sm:text-lg text-white truncate mt-1 group-hover:text-[#ffff55] transition-colors">
+                                    213.171.18.152:32086
+                                </div>
+                                <div class="font-mc text-[11px] text-gray-400 mt-0.5">Стабильный вход с любого лаунчера</div>
+                            </div>
+                        </div>
+                        <button class="mc-btn mc-btn-gold px-3.5 py-3 font-pixel text-[10px] shrink-0">
+                            КОПИРОВАТЬ
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- ==========================================
+                     AUTHENTIC MINECRAFT MULTIPLAYER SERVER LIST GUI
+                     (FAST PARALLEL REAL-TIME STATUS)
+                     ========================================== -->
+                <div id="server-list" class="max-w-4xl mx-auto text-left scroll-mt-24">
+                    <div class="mc-window p-4 sm:p-6">
+                        
+                        <!-- Window Header Title like Minecraft "Сетевая игра" -->
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-4 border-b-2 border-[#2c2a38]">
+                            <div class="flex items-center space-x-3">
+                                <img src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/item/compass_16.png"
+                                     onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.4/assets/minecraft/textures/item/compass_16.png'"
+                                     alt="" class="w-5 h-5 pixelated">
+                                <span class="font-pixel text-xs sm:text-sm text-white drop-shadow-[2px_2px_0_#000]">
+                                    СЕТЕВАЯ ИГРА — РЕАЛЬНЫЙ МОНИТОРИНГ
+                                </span>
+                            </div>
+                            <div class="flex items-center space-x-2 font-mc text-xs">
+                                <span class="text-gray-400">API узел:</span>
+                                <span id="apiSourceLabel" class="text-[#55ffff] bg-[#13121a] px-2 py-0.5 border border-[#2f2d3d]">Параллельный опрос...</span>
+                            </div>
+                        </div>
+
+                        <!-- Recessed Obsidian Container -->
+                        <div class="mc-server-list-bg p-3 sm:p-5">
+                            
+                            <!-- The Server Slot Entry (Exact Minecraft Multiplayer Entry Layout) -->
+                            <div class="mc-server-slot selected p-3 sm:p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                                
+                                <div class="flex items-start sm:items-center space-x-3.5 w-full min-w-0">
+                                    <!-- 64x64 Pixel Server Icon (Real Vanilla TNT default, replaced if server sends custom favicon) -->
+                                    <div class="relative w-16 h-16 bg-[#09090c] border-2 border-[#4a4859] shrink-0 overflow-hidden shadow-[2px_2px_0_#000]">
+                                        <img id="liveServerFavicon"
+                                             src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/block/tnt_side.png"
+                                             onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.4/assets/minecraft/textures/block/tnt_side.png'"
+                                             alt="Server Icon" class="w-full h-full object-cover pixelated">
+                                    </div>
+
+                                    <!-- Server Title & Live MOTD -->
+                                    <div class="min-w-0 flex-1">
+                                        <div class="flex items-center justify-between gap-2">
+                                            <div class="flex items-center space-x-2 truncate">
+                                                <span class="font-mc font-bold text-sm sm:text-base text-white drop-shadow-[1px_1px_0_#000]">
+                                                    KOCHBRATAN ANARCHY
+                                                </span>
+                                                <span id="liveStateBadge" class="font-pixel text-[8px] px-1.5 py-0.5 bg-yellow-500/20 text-yellow-300 border border-yellow-500/40">
+                                                    ОБНОВЛЕНИЕ...
+                                                </span>
+                                            </div>
+
+                                            <!-- Right Side: Real Online Players + 5 Pixel Ping Bars -->
+                                            <div class="flex items-center space-x-2.5 shrink-0">
+                                                <span id="livePlayersSlotText" 
+                                                      data-mc-title="§aРеальный онлайн сервера"
+                                                      data-mc-lore="§7Данные напрямую с порт-пинга|§f213.171.18.152:32086"
+                                                      class="font-mc text-sm sm:text-base text-gray-200 font-bold tracking-wider">
+                                                    0/20
+                                                </span>
+                                                <!-- Authentic 5-Bar Minecraft Ping Indicator -->
+                                                <div id="pingBarsWrapper" 
+                                                     data-mc-title="§aСтатус соединения" 
+                                                     data-mc-lore="§7Прямой опрос API серверов"
+                                                     class="w-6 h-5 flex items-end">
+                                                    <svg id="pingBarsSvg" viewBox="0 0 10 8" class="w-6 h-5 pixelated" shape-rendering="crispEdges">
+                                                        <rect id="pbar1" x="0" y="6" width="1" height="2" fill="#55ff55"/>
+                                                        <rect id="pbar2" x="2" y="5" width="1" height="3" fill="#55ff55"/>
+                                                        <rect id="pbar3" x="4" y="3" width="1" height="5" fill="#55ff55"/>
+                                                        <rect id="pbar4" x="6" y="2" width="1" height="6" fill="#55ff55"/>
+                                                        <rect id="pbar5" x="8" y="0" width="1" height="8" fill="#55ff55"/>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Two-line Minecraft MOTD -->
+                                        <div id="liveMotdContainer" class="font-mc text-xs sm:text-sm mt-1.5 leading-snug space-y-0.5">
+                                            <div class="text-[#ff5555]">☠ KOCHBRATAN — АНАРХИЯ БЕЗ ПРАВИЛ И ПРИВАТОВ ☠</div>
+                                            <div class="text-gray-300">IP: kochbratan.wellduck.org | 213.171.18.152:32086</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Live Server Diagnostics Sub-panel -->
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4 pt-3 border-t border-[#252330] text-center">
+                                <div class="bg-[#14131b]/95 p-2.5 border border-[#2b2938]">
+                                    <span class="font-mc text-[10px] text-gray-400 block">СТАТУС ХОСТА</span>
+                                    <span id="diagHostStatus" class="font-pixel text-[11px] text-yellow-400 mt-1 block">ОПРОС...</span>
+                                </div>
+                                <div class="bg-[#14131b]/95 p-2.5 border border-[#2b2938]">
+                                    <span class="font-mc text-[10px] text-gray-400 block">ИГРОКОВ В СЕТИ</span>
+                                    <span id="diagOnlineCount" class="font-pixel text-[11px] text-white mt-1 block">--</span>
+                                </div>
+                                <div class="bg-[#14131b]/95 p-2.5 border border-[#2b2938]">
+                                    <span class="font-mc text-[10px] text-gray-400 block">ВЕРСИЯ СЕРВЕРА</span>
+                                    <span id="diagVersion" class="font-pixel text-[11px] text-[#ffff55] mt-1 block truncate px-1">Java Edition</span>
+                                </div>
+                                <div class="bg-[#14131b]/95 p-2.5 border border-[#2b2938]">
+                                    <span class="font-mc text-[10px] text-gray-400 block">ОТКЛИК (PING)</span>
+                                    <span id="diagLatency" class="font-pixel text-[11px] text-[#55ffff] mt-1 block">-- ms</span>
+                                </div>
+                            </div>
+
+                            <!-- Online Players Sample / Honest Status Bar -->
+                            <div id="onlinePlayersBar" class="mt-3 bg-[#121118]/95 border border-[#262433] px-3.5 py-2.5 flex flex-wrap items-center justify-between gap-2 text-xs font-mc">
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-gray-400">Игроки онлайн:</span>
+                                    <div id="playersAvatarList" class="flex items-center flex-wrap gap-2 text-gray-300">
+                                        <span>Быстрый опрос узлов 213.171.18.152:32086...</span>
+                                    </div>
+                                </div>
+                                <span id="lastCheckedTime" class="text-[11px] text-gray-500">Обновлено: только что</span>
+                            </div>
+
+                        </div>
+
+                        <!-- Authentic Minecraft Multiplayer Bottom Action Buttons -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
+                            <button onclick="copyIp('kochbratan.wellduck.org', 'Доменный IP')" 
+                                    class="mc-btn mc-btn-crimson py-3 px-4 font-pixel text-[10px] sm:text-xs flex items-center justify-center space-x-2">
+                                <span>▶ ПОДКЛЮЧИТЬСЯ (ДОМЕН)</span>
+                            </button>
+                            <button onclick="copyIp('213.171.18.152:32086', 'Прямой IP')" 
+                                    class="mc-btn py-3 px-4 font-pixel text-[10px] sm:text-xs flex items-center justify-center space-x-2">
+                                <span>⚡ ПРЯМОЕ ПОДКЛЮЧЕНИЕ</span>
+                            </button>
+                            <button onclick="queryRealServerStatus(true)" 
+                                    class="mc-btn py-3 px-4 font-pixel text-[10px] sm:text-xs flex items-center justify-center space-x-2">
+                                <span id="refreshSpinner" class="inline-block">🔄</span>
+                                <span>ОБНОВИТЬ СТАТУС</span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==========================================
+             INTERACTIVE 9-SLOT MINECRAFT HOTBAR / INVENTORY
+             WITH 100% REAL VANILLA TEXTURES
+             ========================================== -->
+        <section id="inventory-section" class="py-16 px-4 bg-[#0c0b10]/90 border-t-4 border-b-4 border-[#1d1b27] scroll-mt-20">
+            <div class="max-w-5xl mx-auto">
+                
+                <div class="text-center mb-10">
+                    <div class="inline-block font-pixel text-[10px] text-[#ffaa00] bg-[#191722] border border-[#38344c] px-3 py-1 mb-3">
+                        ИНТЕРАКТИВНЫЙ ИНВЕНТАРЬ [КЛАВИШИ 1–9]
+                    </div>
+                    <h2 class="font-pixel text-xl sm:text-3xl text-white drop-shadow-[3px_3px_0_#000]">
+                        АРСЕНАЛ И ПРАВИЛА В ХОТБАРЕ
+                    </h2>
+                    <p class="font-mc text-xs sm:text-sm text-gray-400 mt-2">
+                        Кликай по слотам с оригинальными предметами Minecraft (или жми клавиши <span class="text-[#ffff55]">1–9</span>), чтобы изучить механики сервера
+                    </p>
+                </div>
+
+                <!-- Minecraft Item Inspection Panel (Selected Slot Details) -->
+                <div class="mc-window p-5 sm:p-8 mb-6">
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                        
+                        <!-- Big Selected Item Preview Frame with Real Vanilla PNG -->
+                        <div id="inspectPreviewFrame" class="md:col-span-4 flex flex-col items-center justify-center bg-[#181720] border-4 border-[#3a384a] p-6 relative shadow-[inset_0_0_25px_rgba(0,0,0,0.9)]">
+                            <span id="inspectSlotNumber" class="absolute top-2.5 left-3 font-pixel text-[10px] text-gray-400">СЛОТ #1</span>
+                            <span id="inspectItemRarity" class="absolute top-2.5 right-3 font-mc text-[10px] px-2 py-0.5 bg-red-950 text-red-300 border border-red-700">АНАРХИЯ</span>
+                            
+                            <div class="w-28 h-28 my-3 flex items-center justify-center relative">
+                                <img id="inspectItemImage"
+                                     src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/block/tnt_side.png"
+                                     alt="Selected Minecraft Item"
+                                     class="w-24 h-24 object-contain pixelated drop-shadow-[4px_6px_0_rgba(0,0,0,0.75)] transition-transform duration-150 hover:scale-110">
+                            </div>
+
+                            <div id="inspectStackBadge" class="font-pixel text-sm text-white self-end mt-1 drop-shadow-[2px_2px_0_#000]">64</div>
+                        </div>
+
+                        <!-- Selected Item Minecraft Tooltip-Style Lore Box (#100010) -->
+                        <div class="md:col-span-8 bg-[#100010] border-2 border-[#5000ff] p-5 sm:p-6 shadow-[0_0_0_3px_#100010,0_10px_30px_rgba(0,0,0,0.85)]">
+                            <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-[#2e0963]">
+                                <h3 id="inspectItemTitle" class="font-pixel text-sm sm:text-lg text-[#ff55ff] drop-shadow-[2px_2px_0_#000]">
+                                    Динамит и Тотальный Гриф
+                                </h3>
+                                <span id="inspectItemId" class="font-mono text-xs text-gray-500">minecraft:tnt</span>
+                            </div>
+
+                            <!-- Enchantment / Attribute Lines -->
+                            <div id="inspectItemEnchants" class="font-mc text-xs sm:text-sm text-[#a855f7] space-y-1 mb-3">
+                                <div>✦ Взрывоопасность X</div>
+                                <div>✦ Разрушение баз V</div>
+                            </div>
+
+                            <!-- Main Description -->
+                            <p id="inspectItemDesc" class="text-gray-200 text-sm sm:text-base leading-relaxed mb-4">
+                                На сервере полностью отсутствуют приваты регионов. Любую базу можно вычислить по координатам, разнести динамитом или вагонетками с ТНТ и забрать весь чужой лут себе.
+                            </p>
+
+                            <!-- Item Green Attributes like Minecraft Weapons -->
+                            <div class="pt-3 border-t border-[#240b47] font-mc text-xs space-y-1">
+                                <div class="text-gray-400">Когда используется на KOCHBRATAN:</div>
+                                <div id="inspectAttr1" class="text-[#55ff55]">+100% Свобода рейдов и гриферства</div>
+                                <div id="inspectAttr2" class="text-[#55ffff]">0% Защиты сундуков приватами</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Authentic 9-Slot Minecraft Hotbar -->
+                <div class="flex justify-center">
+                    <div class="mc-window p-2.5 sm:p-3 inline-flex flex-wrap justify-center gap-1.5 sm:gap-2 bg-[#181720]">
+                        <div id="hotbarContainer" class="flex flex-wrap justify-center gap-1.5 sm:gap-2"></div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==========================================
+             THE 2 IRON RULES vs TOTAL FREEDOM
+             WITH REAL VANILLA TEXTURE ICONS
+             ========================================== -->
+        <section id="rules-section" class="py-16 sm:py-20 px-4 scroll-mt-20">
+            <div class="max-w-6xl mx-auto">
+                
+                <div class="text-center mb-12">
+                    <div class="inline-block font-pixel text-[10px] text-[#ff5555] bg-red-950/50 border border-red-700/60 px-3 py-1 mb-3">
+                        КОДЕКС ЧЕСТНОЙ АНАРХИИ
+                    </div>
+                    <h2 class="font-pixel text-xl sm:text-3xl md:text-4xl text-white drop-shadow-[3px_3px_0_#000]">
+                        ВСЕГО <span class="text-[#ff5555]">2 ЗАПРЕТА</span> — ОСТАЛЬНОЕ РАЗРЕШЕНО
+                    </h2>
+                    <p class="font-mc text-xs sm:text-sm text-gray-400 mt-3 max-w-2xl mx-auto">
+                        Мы не баним за гриф, ловушки, обман или жесткие разборки в чате. Чтобы сервер жил вечно и побеждал скилл, действуют лишь два железных табу:
+                    </p>
+                </div>
+
+                <!-- Two Forbidden Iron Rules Cards -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+                    
+                    <!-- RULE 1: NO CHEATS -->
+                    <div onmouseenter="playWarningTone()"
+                         data-mc-title="§4§lТАБУ №1: БЕЗ ЧИТОВ"
+                         data-mc-lore="§cЗапрещены любые чит-клиенты|§7KillAura, X-Ray, Fly, Baritone, Freecam|§4Наказание: Перманентный бан"
+                         class="mc-window p-6 sm:p-8 border-l-8 border-l-red-600 relative overflow-hidden group">
+                        <div class="flex items-start space-x-4 sm:space-x-5">
+                            <!-- Real Vanilla Barrier Texture -->
+                            <div class="w-16 h-16 bg-[#240a0d] border-2 border-red-600 flex items-center justify-center shrink-0 shadow-[4px_4px_0_#000]">
+                                <img src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/item/barrier.png"
+                                     onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.4/assets/minecraft/textures/item/barrier.png'"
+                                     alt="Barrier" class="w-11 h-11 pixelated">
+                            </div>
+                            <div>
+                                <div class="inline-block font-pixel text-[9px] bg-red-600 text-white px-2 py-0.5 mb-2">
+                                    ПРАВИЛО #1 • КАРАЕТСЯ БАНОМ
+                                </div>
+                                <h3 class="font-pixel text-base sm:text-xl text-white mb-2">
+                                    1. БЕЗ ЧИТОВ И СОФТА
+                                </h3>
+                                <p class="text-gray-300 text-sm sm:text-base leading-relaxed">
+                                    Полный запрет на любые чит-клиенты, макросы и нечестные модификации (<span class="text-red-400 font-mono">X-Ray, KillAura, HitBoxes, Fly, ElytraFly, Baritone, AutoTotem</span>). Настоящий анархист доминирует за счет тактики, координат и рук, а не скачанного софта.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RULE 2: NO LAG MACHINES -->
+                    <div onmouseenter="playWarningTone()"
+                         data-mc-title="§6§lТАБУ №2: БЕЗ ЛАГ-МАШИН"
+                         data-mc-lore="§cЗапрещен намеренный краш TPS|§7Спам сущностями, арморстендами и поршнями|§4Наказание: Снос + Бан"
+                         class="mc-window p-6 sm:p-8 border-l-8 border-l-amber-500 relative overflow-hidden group">
+                        <div class="flex items-start space-x-4 sm:space-x-5">
+                            <!-- Real Vanilla Redstone Comparator Texture -->
+                            <div class="w-16 h-16 bg-[#261607] border-2 border-amber-500 flex items-center justify-center shrink-0 shadow-[4px_4px_0_#000]">
+                                <img src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/item/comparator.png"
+                                     onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.4/assets/minecraft/textures/item/comparator.png'"
+                                     alt="Comparator" class="w-11 h-11 pixelated">
+                            </div>
+                            <div>
+                                <div class="inline-block font-pixel text-[9px] bg-amber-600 text-white px-2 py-0.5 mb-2">
+                                    ПРАВИЛО #2 • ЗАЩИТА TPS 20.0
+                                </div>
+                                <h3 class="font-pixel text-base sm:text-xl text-white mb-2">
+                                    2. БЕЗ ЛАГ-МАШИН
+                                </h3>
+                                <p class="text-gray-300 text-sm sm:text-base leading-relaxed">
+                                    Запрещено строить механизмы, цель которых — вызвать лаги сервера, уронить TPS или крашнуть чанки (бесконечные клок-генераторы, тысячи вагонеток в одном блоке, спам песком и сущностями). Обычные автофермы и редстоун-ловушки <span class="text-[#55ff55] font-semibold">полностью разрешены</span>!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- GREEN ZONE: TOTAL ANARCHY FREEDOM -->
+                <div class="mc-window p-6 sm:p-8 border-2 border-[#22c55e]/50">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 mb-6 border-b border-green-900/50">
+                        <div>
+                            <span class="font-pixel text-[10px] text-[#55ff55] uppercase tracking-wider">ЗЕЛЕНАЯ ЗОНА СВОБОДЫ</span>
+                            <h3 class="font-pixel text-lg sm:text-2xl text-white mt-1">ЧТО РАЗРЕШЕНО НА KOCHBRATAN? — ВСЁ!</h3>
+                        </div>
+                        <span class="font-mc text-xs bg-green-950 text-[#55ff55] border border-green-600 px-3 py-1.5 self-start md:self-auto">
+                            ✓ 100% ЛЕГАЛЬНО НА СЕРВЕРЕ
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-mc text-xs">
+                        <div class="bg-[#0e1412]/90 border border-green-900/60 p-4 flex flex-col">
+                            <div class="flex items-center space-x-2.5 mb-2">
+                                <img src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/block/tnt_side.png"
+                                     onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.4/assets/minecraft/textures/block/tnt_side.png'"
+                                     alt="" class="w-6 h-6 pixelated">
+                                <span class="text-[#55ff55] font-bold text-sm">Гриф и Рейды</span>
+                            </div>
+                            <p class="text-gray-400 font-sans text-xs leading-relaxed">Взрывай любые найденные базы динамитом, визерами и криперами. Никаких приватов и жалоб.</p>
+                        </div>
+                        <div class="bg-[#0e1412]/90 border border-green-900/60 p-4 flex flex-col">
+                            <div class="flex items-center space-x-2.5 mb-2">
+                                <img src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/item/end_crystal.png"
+                                     onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.4/assets/minecraft/textures/item/end_crystal.png'"
+                                     alt="" class="w-6 h-6 pixelated">
+                                <span class="text-[#55ff55] font-bold text-sm">Кристалл PvP</span>
+                            </div>
+                            <p class="text-gray-400 font-sans text-xs leading-relaxed">PvP везде: на спавне, в Незере, в Энде. Разрешены кристаллы, якоря возрождения и ловушки.</p>
+                        </div>
+                        <div class="bg-[#0e1412]/90 border border-green-900/60 p-4 flex flex-col">
+                            <div class="flex items-center space-x-2.5 mb-2">
+                                <img src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/item/ender_eye.png"
+                                     onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.4/assets/minecraft/textures/item/ender_eye.png'"
+                                     alt="" class="w-6 h-6 pixelated">
+                                <span class="text-[#55ff55] font-bold text-sm">Шпионаж и Кланы</span>
+                            </div>
+                            <p class="text-gray-400 font-sans text-xs leading-relaxed">Внедряйся в чужие кланы, сливай координаты вражеских складов и устраивай перевороты.</p>
+                        </div>
+                        <div class="bg-[#0e1412]/90 border border-green-900/60 p-4 flex flex-col">
+                            <div class="flex items-center space-x-2.5 mb-2">
+                                <img src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/item/netherite_ingot.png"
+                                     onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.4/assets/minecraft/textures/item/netherite_ingot.png'"
+                                     alt="" class="w-6 h-6 pixelated">
+                                <span class="text-[#55ff55] font-bold text-sm">Честная Ванила</span>
+                            </div>
+                            <p class="text-gray-400 font-sans text-xs leading-relaxed">Никаких купленных админок, креатива и банов по прихоти модераторов. Все игроки в равных условиях.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==========================================
+             HOW TO CONNECT STEP-BY-STEP
+             ========================================== -->
+        <section id="connect-section" class="py-16 px-4 bg-[#0c0b10]/90 border-t-4 border-[#1d1b27] scroll-mt-20">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-12">
+                    <span class="font-pixel text-[10px] text-[#55ffff] uppercase tracking-widest block mb-2">[ БЫСТРЫЙ СТАРТ ]</span>
+                    <h2 class="font-pixel text-xl sm:text-3xl text-white drop-shadow-[3px_3px_0_#000]">КАК НАЧАТЬ ИГРАТЬ ЗА 30 СЕКУНД</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                    <!-- Step 1 -->
+                    <div class="mc-window p-6 relative">
+                        <div class="w-10 h-10 bg-[#991b1b] border-2 border-[#f87171] font-pixel text-sm text-white flex items-center justify-center mb-4 shadow-[3px_3px_0_#000]">
+                            01
+                        </div>
+                        <h3 class="font-pixel text-xs sm:text-sm text-white mb-2">ОТКРОЙ MINECRAFT</h3>
+                        <p class="text-gray-400 text-xs sm:text-sm leading-relaxed">
+                            Запусти Minecraft Java Edition с любого удобного лаунчера (Лицензия, Prism, Modrinth, Legacy, TLauncher).
+                        </p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="mc-window p-6 relative">
+                        <div class="w-10 h-10 bg-[#b45309] border-2 border-[#fde047] font-pixel text-sm text-white flex items-center justify-center mb-4 shadow-[3px_3px_0_#000]">
+                            02
+                        </div>
+                        <h3 class="font-pixel text-xs sm:text-sm text-white mb-2">ДОБАВЬ СЕРВЕР</h3>
+                        <p class="text-gray-400 text-xs sm:text-sm leading-relaxed">
+                            Перейди в меню <span class="text-white font-semibold">«Сетевая игра»</span> &rarr; <span class="text-white font-semibold">«Добавить сервер»</span> или <span class="text-white font-semibold">«Прямое подключение»</span>.
+                        </p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="mc-window p-6 relative">
+                        <div class="w-10 h-10 bg-[#15803d] border-2 border-[#4ade80] font-pixel text-sm text-white flex items-center justify-center mb-4 shadow-[3px_3px_0_#000]">
+                            03
+                        </div>
+                        <h3 class="font-pixel text-xs sm:text-sm text-white mb-2">ВСТАВЬ ЛЮБОЙ IP</h3>
+                        <p class="text-gray-400 text-xs sm:text-sm leading-relaxed">
+                            Вставь <span class="text-[#55ffff] font-mono">kochbratan.wellduck.org</span> или прямой адрес <span class="text-[#ffff55] font-mono">213.171.18.152:32086</span> и врывайся в анархию!
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Final CTA Banner -->
+                <div class="mc-window p-6 sm:p-10 text-center">
+                    <h3 class="font-pixel text-base sm:text-2xl text-white mb-3 drop-shadow-[2px_2px_0_#000]">
+                        ГОТОВ ВЫЖИТЬ В МИРЕ БЕЗ ПРАВИЛ?
+                    </h3>
+                    <p class="font-mc text-xs sm:text-sm text-gray-300 mb-6">
+                        Копируй адрес и убегай подальше от спавна, пока тебя не заметили!
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <button onclick="copyIp('kochbratan.wellduck.org', 'Доменный IP')" 
+                                class="mc-btn mc-btn-crimson px-6 py-4 font-pixel text-xs tracking-wider w-full sm:w-auto">
+                            📋 KOCHBRATAN.WELLDUCK.ORG
+                        </button>
+                        <button onclick="copyIp('213.171.18.152:32086', 'Цифровой IP')" 
+                                class="mc-btn mc-btn-gold px-6 py-4 font-pixel text-xs tracking-wider w-full sm:w-auto">
+                            ⚡ 213.171.18.152:32086
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==========================================
+         BEDROCK FOOTER
+         ========================================== -->
+    <footer class="relative z-10 bg-[#070609] border-t-4 border-[#181722] py-10 px-4 font-mc text-xs text-gray-500">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <span class="font-pixel text-xs text-white">KOCHBRATAN</span>
+                <span>•</span>
+                <span class="text-red-500">MINECRAFT ANARCHY SERVER</span>
+            </div>
+            <div class="text-center sm:text-right text-[11px] text-gray-500">
+                IP 1: <span class="text-gray-300 font-mono">kochbratan.wellduck.org</span> | IP 2: <span class="text-gray-300 font-mono">213.171.18.152:32086</span><br>
+                Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==========================================
+         JAVASCRIPT ENGINE:
+         1. Official Vanilla 1.20.4 Texture CDN Helper & 3D Block Switcher
+         2. Web Audio API Minecraft Sound Synthesizer
+         3. Fast Parallel Non-Blocking Server Status Polling (Promise.any)
+         4. Interactive 9-Slot Hotbar & Keyboard 1-9 Controls
+         5. Global Floating Minecraft Item Tooltip Engine
+         ========================================== -->
+    <script>
+        const CDN_PRIMARY = 'https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures';
+        const CDN_FALLBACK = 'https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.4/assets/minecraft/textures';
+
+        // ==========================================
+        // 1. WEB AUDIO API MINECRAFT SOUND SYNTHESIZER
+        // ==========================================
+        let soundEnabled = true;
+        let audioCtx = null;
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const icon = document.getElementById('soundIcon');
+            const btn = document.getElementById('soundToggleBtn');
+            if (icon) icon.textContent = soundEnabled ? '🔊' : '🔇';
+            if (btn) {
+                btn.setAttribute('data-mc-lore', `§7Синтез звуков клика и опыта|${soundEnabled ? '§aСтатус: ВКЛ' : '§cСтатус: ВЫКЛ'}`);
+            }
+            if (soundEnabled) playMcClick();
+        }
+
+        function playMcClick(pitchMultiplier = 1) {
+            if (!soundEnabled) return;
+            try {
+                const ctx = getAudioContext();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(720 * pitchMultiplier, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(160 * pitchMultiplier, ctx.currentTime + 0.045);
+
+                gain.gain.setValueAtTime(0.25, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.045);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.045);
+            } catch (e) {}
+        }
+
+        function playXpOrbSound() {
+            if (!soundEnabled) return;
+            try {
+                const ctx = getAudioContext();
+                const notes = [880, 1174.66, 1396.91, 1760];
+                notes.forEach((freq, idx) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    const start = ctx.currentTime + idx * 0.065;
+                    osc.frequency.setValueAtTime(freq, start);
+                    gain.gain.setValueAtTime(0.18, start);
+                    gain.gain.exponentialRampToValueAtTime(0.008, start + 0.28);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(start);
+                    osc.stop(start + 0.28);
+                });
+            } catch (e) {}
+        }
+
+        function playWarningTone() {
+            if (!soundEnabled) return;
+            try {
+                const ctx = getAudioContext();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(150, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(95, ctx.currentTime + 0.09);
+                gain.gain.setValueAtTime(0.08, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.005, ctx.currentTime + 0.09);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.09);
+            } catch (e) {}
+        }
+
+        // ==========================================
+        // 2. REAL VANILLA 1.20.4 3D BLOCK PRESETS & SWITCHER
+        // ==========================================
+        const vanillaBlocks = [
+            {
+                id: 'tnt',
+                name: 'TNT',
+                icon: '/block/tnt_side.png',
+                top: '/block/tnt_top.png',
+                bottom: '/block/tnt_bottom.png',
+                side: '/block/tnt_side.png'
+            },
+            {
+                id: 'crying_obsidian',
+                name: 'Плачущий обсидиан',
+                icon: '/block/crying_obsidian.png',
+                top: '/block/crying_obsidian.png',
+                bottom: '/block/crying_obsidian.png',
+                side: '/block/crying_obsidian.png'
+            },
+            {
+                id: 'respawn_anchor',
+                name: 'Якорь возрождения',
+                icon: '/block/respawn_anchor_side4.png',
+                top: '/block/respawn_anchor_top_off.png',
+                bottom: '/block/obsidian.png',
+                side: '/block/respawn_anchor_side4.png'
+            },
+            {
+                id: 'bedrock',
+                name: 'Бедрок',
+                icon: '/block/bedrock.png',
+                top: '/block/bedrock.png',
+                bottom: '/block/bedrock.png',
+                side: '/block/bedrock.png'
+            },
+            {
+                id: 'gilded_blackstone',
+                name: 'Золочёный чернит',
+                icon: '/block/gilded_blackstone.png',
+                top: '/block/gilded_blackstone.png',
+                bottom: '/block/gilded_blackstone.png',
+                side: '/block/gilded_blackstone.png'
+            }
+        ];
+
+        let currentBlockIndex = 0;
+
+        function cssMultiUrl(relativePath) {
+            return `url('${CDN_PRIMARY}${relativePath}'), url('${CDN_FALLBACK}${relativePath}')`;
+        }
+
+        function applyCubeTextures(index) {
+            currentBlockIndex = index;
+            const preset = vanillaBlocks[index];
+            if (!preset) return;
+
+            ['navCube', 'heroCube'].forEach(cubeId => {
+                const cube = document.getElementById(cubeId);
+                if (!cube) return;
+                cube.querySelector('.face-front').style.backgroundImage = cssMultiUrl(preset.side);
+                cube.querySelector('.face-back').style.backgroundImage = cssMultiUrl(preset.side);
+                cube.querySelector('.face-right').style.backgroundImage = cssMultiUrl(preset.side);
+                cube.querySelector('.face-left').style.backgroundImage = cssMultiUrl(preset.side);
+                cube.querySelector('.face-top').style.backgroundImage = cssMultiUrl(preset.top);
+                cube.querySelector('.face-bottom').style.backgroundImage = cssMultiUrl(preset.bottom);
+            });
+
+            renderBlockSwitcherPills();
+        }
+
+        function renderBlockSwitcherPills() {
+            const container = document.getElementById('blockSwitcherContainer');
+            if (!container) return;
+            container.innerHTML = vanillaBlocks.map((b, idx) => `
+                <button onclick="selectBlockPreset(${idx})"
+                        class="block-pill ${idx === currentBlockIndex ? 'active' : 'text-gray-300'} px-2.5 py-1.5 font-mc text-[11px] flex items-center space-x-1.5">
+                    <img src="${CDN_PRIMARY}${b.icon}"
+                         onerror="this.onerror=null;this.src='${CDN_FALLBACK}${b.icon}'"
+                         alt="" class="w-4 h-4 pixelated">
+                    <span>${b.name}</span>
+                </button>
+            `).join('');
+        }
+
+        function selectBlockPreset(idx) {
+            playMcClick(1.15);
+            applyCubeTextures(idx);
+        }
+
+        function cycleCubeTexture(e) {
+            if (e) e.preventDefault();
+            const nextIdx = (currentBlockIndex + 1) % vanillaBlocks.length;
+            selectBlockPreset(nextIdx);
+        }
+
+        // ==========================================
+        // 3. SPLASH TEXT CYCLER & IP COPY + ADVANCEMENT TOAST
+        // ==========================================
+        const splashes = [
+            "Никаких приватов!",
+            "Только без читов и лаг-машин!",
+            "100% Чистая Анархия!",
+            "Прячь базу за 100к блоков!",
+            "Кристаллы и ТНТ разрешены!",
+            "kochbratan.wellduck.org!",
+            "Выживает сильнейший!"
+        ];
+        let splashIdx = 0;
+
+        function nextSplashText() {
+            playMcClick(1.15);
+            splashIdx = (splashIdx + 1) % splashes.length;
+            const el = document.getElementById('mcSplashText');
+            if (el) el.textContent = splashes[splashIdx];
+        }
+
+        let toastTimer = null;
+        function copyIp(ip, label = 'IP') {
+            playMcClick(1.0);
+            playXpOrbSound();
+
+            const textarea = document.createElement('textarea');
+            textarea.value = ip;
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+            } catch (err) {}
+            document.body.removeChild(textarea);
+
+            const toast = document.getElementById('mcAdvancementToast');
+            const textEl = document.getElementById('advancementText');
+            if (textEl) textEl.textContent = `${label}: ${ip}`;
+            if (toast) {
+                toast.classList.add('show');
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3600);
+            }
+        }
+
+        // ==========================================
+        // 4. FAST NON-BLOCKING PARALLEL SERVER STATUS POLLING
+        //    (Promise.any with strict 3.5s AbortController timeout)
+        // ==========================================
+        function setPingBarsState(barsLit, colorHex) {
+            for (let i = 1; i <= 5; i++) {
+                const bar = document.getElementById(`pbar${i}`);
+                if (!bar) continue;
+                bar.setAttribute('fill', i <= barsLit ? colorHex : '#3a3846');
+            }
+        }
+
+        async function fetchWithStrictTimeout(url, timeoutMs = 3500) {
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), timeoutMs);
+            try {
+                const response = await fetch(url, { signal: controller.signal, cache: 'no-store' });
+                clearTimeout(timer);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                return await response.json();
+            } catch (err) {
+                clearTimeout(timer);
+                throw err;
+            }
+        }
+
+        async function queryRealServerStatus(manualClick = false) {
+            if (manualClick) playMcClick(0.95);
+
+            const spinner = document.getElementById('refreshSpinner');
+            if (spinner) spinner.classList.add('animate-spin');
+
+            const startPerf = performance.now();
+
+            const endpoints = [
+                {
+                    name: 'mcstatus.io (213.171.18.152)',
+                    url: 'https://api.mcstatus.io/v2/status/java/213.171.18.152:32086',
+                    parser: (d) => ({
+                        online: Boolean(d && d.online),
+                        playersOnline: d?.players?.online ?? 0,
+                        playersMax: d?.players?.max ?? 20,
+                        playersList: (d?.players?.list || []).map(p => p.name_clean || p.name_raw).filter(Boolean),
+                        version: d?.version?.name_clean || d?.version?.name_raw || 'Java Edition',
+                        motdClean: d?.motd?.clean || '',
+                        icon: d?.icon || null
+                    })
+                },
+                {
+                    name: 'mcstatus.io (kochbratan)',
+                    url: 'https://api.mcstatus.io/v2/status/java/kochbratan.wellduck.org:32086',
+                    parser: (d) => ({
+                        online: Boolean(d && d.online),
+                        playersOnline: d?.players?.online ?? 0,
+                        playersMax: d?.players?.max ?? 20,
+                        playersList: (d?.players?.list || []).map(p => p.name_clean || p.name_raw).filter(Boolean),
+                        version: d?.version?.name_clean || d?.version?.name_raw || 'Java Edition',
+                        motdClean: d?.motd?.clean || '',
+                        icon: d?.icon || null
+                    })
+                },
+                {
+                    name: 'mcsrvstat.us (Direct IP)',
+                    url: 'https://api.mcsrvstat.us/3/213.171.18.152:32086',
+                    parser: (d) => ({
+                        online: Boolean(d && d.online),
+                        playersOnline: d?.players?.online ?? 0,
+                        playersMax: d?.players?.max ?? 20,
+                        playersList: (d?.players?.list || []).map(p => typeof p === 'string' ? p : p.name).filter(Boolean),
+                        version: d?.version || 'Java Edition',
+                        motdClean: Array.isArray(d?.motd?.clean) ? d.motd.clean.join('\n') : '',
+                        icon: d?.icon || null
+                    })
+                }
+            ];
+
+            let bestResult = null;
+            let bestSource = 'mcstatus.io';
+
+            try {
+                // Race all 3 endpoints in parallel; first ONLINE response wins immediately
+                const onlineWinner = await Promise.any(
+                    endpoints.map(async (ep) => {
+                        const raw = await fetchWithStrictTimeout(ep.url, 3500);
+                        const parsed = ep.parser(raw);
+                        if (!parsed.online) {
+                            // Keep as fallback if all report offline
+                            if (!bestResult) {
+                                bestResult = parsed;
+                                bestSource = ep.name;
+                            }
+                            throw new Error('Server reported offline');
+                        }
+                        return { parsed, source: ep.name };
+                    })
+                );
+                bestResult = onlineWinner.parsed;
+                bestSource = onlineWinner.source;
+            } catch (aggregateErr) {
+                // All endpoints either timed out or reported offline within 3.5s
+            }
+
+            const elapsedMs = Math.round(performance.now() - startPerf);
+            updateServerStatusUI(bestResult, elapsedMs, bestSource);
+
+            if (spinner) {
+                setTimeout(() => spinner.classList.remove('animate-spin'), 350);
+            }
+        }
+
+        function updateServerStatusUI(result, latencyMs, sourceName) {
+            const navDot = document.getElementById('navStatusDot');
+            const navBadge = document.getElementById('navOnlineBadge');
+            const slotPlayers = document.getElementById('livePlayersSlotText');
+            const stateBadge = document.getElementById('liveStateBadge');
+            const motdBox = document.getElementById('liveMotdContainer');
+            const diagHost = document.getElementById('diagHostStatus');
+            const diagOnline = document.getElementById('diagOnlineCount');
+            const diagVer = document.getElementById('diagVersion');
+            const diagLatency = document.getElementById('diagLatency');
+            const apiSource = document.getElementById('apiSourceLabel');
+            const playersAvatarList = document.getElementById('playersAvatarList');
+            const lastChecked = document.getElementById('lastCheckedTime');
+            const faviconImg = document.getElementById('liveServerFavicon');
+            const pingWrapper = document.getElementById('pingBarsWrapper');
+
+            if (apiSource) apiSource.textContent = sourceName;
+            const nowStr = new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            if (lastChecked) lastChecked.textContent = `Обновлено: ${nowStr}`;
+
+            if (result && result.online) {
+                const online = result.playersOnline;
+                const max = result.playersMax;
+
+                if (navDot) navDot.className = 'w-2 h-2 bg-[#55ff55] inline-block shadow-[0_0_8px_#55ff55]';
+                if (navBadge) navBadge.innerHTML = `ОНЛАЙН: <span class="text-[#55ff55] font-bold">${online}</span> / ${max}`;
+
+                if (slotPlayers) slotPlayers.textContent = `${online}/${max}`;
+                if (stateBadge) {
+                    stateBadge.className = 'font-pixel text-[8px] px-1.5 py-0.5 bg-green-500/20 text-[#55ff55] border border-green-500/50';
+                    stateBadge.textContent = 'ОНЛАЙН';
+                }
+
+                if (diagHost) {
+                    diagHost.className = 'font-pixel text-[11px] text-[#55ff55] mt-1 block';
+                    diagHost.textContent = 'РАБОТАЕТ (ONLINE)';
+                }
+                if (diagOnline) diagOnline.textContent = `${online} из ${max}`;
+                if (diagVer) diagVer.textContent = result.version || 'Java Edition';
+                if (diagLatency) diagLatency.textContent = `${latencyMs} ms`;
+
+                const bars = latencyMs < 150 ? 5 : latencyMs < 300 ? 4 : 3;
+                setPingBarsState(bars, '#55ff55');
+                if (pingWrapper) {
+                    pingWrapper.setAttribute('data-mc-lore', `§aСервер отвечает стабильно|§7Отклик API: §f${latencyMs} мс|§7Игроков: §a${online}/${max}`);
+                }
+
+                if (motdBox) {
+                    const cleanLines = (result.motdClean || '').split('\n').map(s => s.trim()).filter(Boolean);
+                    if (cleanLines.length > 0) {
+                        motdBox.innerHTML = cleanLines.slice(0, 2).map((line, i) => 
+                            `<div class="${i === 0 ? 'text-[#ffff55]' : 'text-gray-300'} truncate">${escapeHtml(line)}</div>`
+                        ).join('');
+                    } else {
+                        motdBox.innerHTML = `
+                            <div class="text-[#ff5555]">☠ KOCHBRATAN — АНАРХИЯ БЕЗ ПРАВИЛ ☠</div>
+                            <div class="text-[#55ff55]">Сервер онлайн! Без читов и лаг-машин.</div>
+                        `;
+                    }
+                }
+
+                if (result.icon && faviconImg) {
+                    faviconImg.src = result.icon;
+                }
+
+                if (playersAvatarList) {
+                    if (result.playersList && result.playersList.length > 0) {
+                        playersAvatarList.innerHTML = result.playersList.slice(0, 10).map(nick => `
+                            <span class="inline-flex items-center space-x-1.5 bg-[#1b1924] border border-[#343146] px-2 py-0.5 text-white">
+                                <img src="https://mc-heads.net/avatar/${encodeURIComponent(nick)}/32" 
+                                     onerror="this.style.display='none'" 
+                                     class="w-4 h-4 pixelated" alt="">
+                                <span>${escapeHtml(nick)}</span>
+                            </span>
+                        `).join('');
+                    } else if (online > 0) {
+                        playersAvatarList.innerHTML = `<span class="text-[#55ff55]">В сети сейчас ${online} игр. (ники скрыты настройками ядра)</span>`;
+                    } else {
+                        playersAvatarList.innerHTML = `<span class="text-gray-300">Сервер онлайн (0 игроков) — заходи первым и захватывай спавн!</span>`;
+                    }
+                }
+            } else {
+                if (navDot) navDot.className = 'w-2 h-2 bg-[#ff5555] inline-block shadow-[0_0_8px_#ff5555]';
+                if (navBadge) navBadge.innerHTML = `СТАТУС: <span class="text-[#ff5555]">ОФФЛАЙН (0/20)</span>`;
+
+                if (slotPlayers) slotPlayers.textContent = `0/20`;
+                if (stateBadge) {
+                    stateBadge.className = 'font-pixel text-[8px] px-1.5 py-0.5 bg-red-500/20 text-[#ff5555] border border-red-500/50';
+                    stateBadge.textContent = 'ОФФЛАЙН';
+                }
+
+                if (diagHost) {
+                    diagHost.className = 'font-pixel text-[11px] text-[#ff5555] mt-1 block';
+                    diagHost.textContent = 'ОФФЛАЙН / РЕСТАРТ';
+                }
+                if (diagOnline) diagOnline.textContent = '0 из 20';
+                if (diagVer) diagVer.textContent = '1.16.5 — 1.21.x';
+                if (diagLatency) diagLatency.textContent = `${latencyMs} ms`;
+
+                setPingBarsState(1, '#ff5555');
+                if (pingWrapper) {
+                    pingWrapper.setAttribute('data-mc-lore', `§cХост сейчас на перезагрузке или выключен|§7Адрес: §f213.171.18.152:32086|§eНажми «Обновить статус»`);
+                }
+
+                if (motdBox) {
+                    motdBox.innerHTML = `
+                        <div class="text-[#ff5555]">☠ KOCHBRATAN ANARCHY — 213.171.18.152:32086</div>
+                        <div class="text-gray-300">Хост на тех. рестарте или спящем режиме. Добавь IP в клиент!</div>
+                    `;
+                }
+
+                if (playersAvatarList) {
+                    playersAvatarList.innerHTML = `<span class="text-[#ffaa00]">Сервер сейчас не отвечает на пинг — скопируй IP в список серверов Minecraft!</span>`;
+                }
+            }
+        }
+
+        function escapeHtml(str) {
+            return String(str).replace(/[&<>"']/g, m => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[m]));
+        }
+
+        // ==========================================
+        // 5. INTERACTIVE 9-SLOT MINECRAFT HOTBAR
+        //    (100% REAL VANILLA 1.20.4 PNG TEXTURES)
+        // ==========================================
+        const hotbarItems = [
+            {
+                slot: 1,
+                title: "Динамит и Тотальный Гриф",
+                mcId: "minecraft:tnt",
+                rarity: "АНАРХИЯ",
+                stack: "64",
+                texture: "/block/tnt_side.png",
+                enchanted: false,
+                enchants: ["Взрывоопасность X", "Разрушение баз V"],
+                desc: "На сервере полностью отсутствуют приваты регионов. Любую базу можно вычислить по координатам, разнести динамитом или вагонетками с ТНТ и забрать весь чужой лут себе.",
+                attr1: "+100% Свобода рейдов и гриферства",
+                attr2: "0% Защиты сундуков приватами"
+            },
+            {
+                slot: 2,
+                title: "Кристалл Энда — Кристалл ПвП",
+                mcId: "minecraft:end_crystal",
+                rarity: "ЭПИЧЕСКИЙ",
+                stack: "64",
+                texture: "/item/end_crystal.png",
+                enchanted: true,
+                enchants: ["Аннигиляция V", "Мгновенный взрыв IV"],
+                desc: "Никаких ограничений на использование Кристаллов Энда и Якорей Возрождения в бою. Сражайся на спавне, в Незере и на бедроке с полной мощью кристаллов.",
+                attr1: "+200% Взрывного урона в PvP",
+                attr2: "Разрешены кристаллы и якоря"
+            },
+            {
+                slot: 3,
+                title: "Незеритовый меч — Беспощадное ПвП",
+                mcId: "minecraft:netherite_sword",
+                rarity: "ЛЕГЕНДАРНЫЙ",
+                stack: "1",
+                texture: "/item/netherite_sword.png",
+                enchanted: true,
+                enchants: ["Острота V", "Заговор огня II", "Неразрушимость III"],
+                desc: "Ожесточенные битвы за контроль над спавном и хайвеями Незера. Объединяйся в кланы или охоться в одиночку — каждый встречный игрок может стать добычей.",
+                attr1: "+8 Урона в ближнем бою",
+                attr2: "Полный дроп ресурсов при смерти"
+            },
+            {
+                slot: 4,
+                title: "Тотем бессмертия — Выживание любой ценой",
+                mcId: "minecraft:totem_of_undying",
+                rarity: "РЕДКИЙ",
+                stack: "1",
+                texture: "/item/totem_of_undying.png",
+                enchanted: false,
+                enchants: ["Второй шанс I", "Огнестойкость II"],
+                desc: "В мире без правил одна ошибка стоит всего инвентаря. Добывай тотемы на рейд-фермах и всегда держи один во второй руке, когда выходишь на спавн.",
+                attr1: "+1 Спасенная жизнь в замесе",
+                attr2: "Честная ванильная механика рейдов"
+            },
+            {
+                slot: 5,
+                title: "Плачущий обсидиан — Секретные базы",
+                mcId: "minecraft:crying_obsidian",
+                rarity: "АНАРХИЯ",
+                stack: "64",
+                texture: "/block/crying_obsidian.png",
+                enchanted: false,
+                enchants: ["Скрытность X", "Укрепление бункера V"],
+                desc: "Единственная защита твоего лута — расстояние и секретность. Уходи за десятки и сотни тысяч блоков по магистралям Незера и строй бункеры из обсидиана.",
+                attr1: "+100000 Блоков от спавна",
+                attr2: "Полная свобода строительства"
+            },
+            {
+                slot: 6,
+                title: "Звезда Незера — Трофеи и кланы",
+                mcId: "minecraft:nether_star",
+                rarity: "ЭПИЧЕСКИЙ",
+                stack: "16",
+                texture: "/item/nether_star.png",
+                enchanted: true,
+                enchants: ["Власть Клана V", "Сила Маяка II"],
+                desc: "Призывай Иссушителей прямо на базах врагов, добывай Звезды Незера и строй маяки для своего клана. Боссы разрушают обсидиан и сеют настоящий хаос.",
+                attr1: "+100% Разрушение укреплений",
+                attr2: "Призыв визеров без лимитов"
+            },
+            {
+                slot: 7,
+                title: "Зачарованное золотое яблоко",
+                mcId: "minecraft:enchanted_golden_apple",
+                rarity: "МИФИЧЕСКИЙ",
+                stack: "64",
+                texture: "/item/golden_apple.png",
+                enchanted: true,
+                enchants: ["Регенерация V", "Никаких админок в донате"],
+                desc: "На KOCHBRATAN нет продажных админок, креатива или рисовки ресурсов. Каждый чар-гепл, найденный в данжах или выбитый в бою, имеет огромную ценность.",
+                attr1: "Равные шансы для каждого игрока",
+                attr2: "Честная ванильная экономика"
+            },
+            {
+                slot: 8,
+                title: "ПРАВИЛО №1: БЕЗ ЧИТОВ",
+                mcId: "minecraft:barrier",
+                rarity: "ЗАПРЕТ #1",
+                stack: "1",
+                texture: "/item/barrier.png",
+                enchanted: false,
+                enchants: ["Античит Защита X", "Перманентный Бан"],
+                desc: "Строгий бан за любые читы (KillAura, X-Ray, Fly, Baritone, Freecam, AutoTotem). Мы за настоящую анархию, где решает скилл игрока, а не скачанный софт.",
+                attr1: "Запрещены любые чит-модификации",
+                attr2: "Честное PvP без софтеров"
+            },
+            {
+                slot: 9,
+                title: "ПРАВИЛО №2: БЕЗ ЛАГ-МАШИН",
+                mcId: "minecraft:comparator",
+                rarity: "ЗАПРЕТ #2",
+                stack: "1",
+                texture: "/item/comparator.png",
+                enchanted: false,
+                enchants: ["Стабильный TPS 20.0", "Защита Хоста"],
+                desc: "Запрет намеренного краша TPS и строительства лаг-машин. Обычные редстоун-механизмы, автофермы, сортировки и ТНТ-пушки полностью разрешены!",
+                attr1: "Стабильный TPS 20.0 без фризов",
+                attr2: "Разрешены фермы и ТНТ-пушки"
+            }
+        ];
+
+        let selectedHotbarIndex = 0;
+
+        function renderHotbar() {
+            const container = document.getElementById('hotbarContainer');
+            if (!container) return;
+
+            container.innerHTML = hotbarItems.map((item, idx) => `
+                <div onclick="selectHotbarSlot(${idx})"
+                     data-mc-title="§e[${item.slot}] §d${item.title}"
+                     data-mc-lore="§8${item.mcId}|§7${item.enchants.join(' • ')}|§aКликни для осмотра"
+                     class="mc-inv-slot ${idx === selectedHotbarIndex ? 'active-slot' : ''} ${item.enchanted ? 'mc-enchanted-glint' : ''}">
+                    <span class="absolute top-1 left-1.5 font-pixel text-[8px] text-gray-300 z-10">${item.slot}</span>
+                    <img src="${CDN_PRIMARY}${item.texture}"
+                         onerror="this.onerror=null;this.src='${CDN_FALLBACK}${item.texture}'"
+                         alt="${escapeHtml(item.title)}"
+                         class="w-10 h-10 object-contain pixelated pointer-events-none">
+                    <span class="absolute bottom-0.5 right-1 font-pixel text-[9px] text-white drop-shadow-[2px_2px_0_#000] z-10">
+                        ${item.stack !== "1" ? item.stack : ""}
+                    </span>
+                </div>
+            `).join('');
+
+            updateInspectionPanel(hotbarItems[selectedHotbarIndex]);
+        }
+
+        function selectHotbarSlot(index) {
+            if (index < 0 || index >= hotbarItems.length) return;
+            selectedHotbarIndex = index;
+            playMcClick(0.9 + index * 0.04);
+            renderHotbar();
+            bindDynamicTooltips();
+        }
+
+        function updateInspectionPanel(item) {
+            document.getElementById('inspectSlotNumber').textContent = `СЛОТ #${item.slot}`;
+            document.getElementById('inspectItemRarity').textContent = item.rarity;
+
+            const previewFrame = document.getElementById('inspectPreviewFrame');
+            if (previewFrame) {
+                if (item.enchanted) {
+                    previewFrame.classList.add('mc-enchanted-glint');
+                } else {
+                    previewFrame.classList.remove('mc-enchanted-glint');
+                }
+            }
+
+            const imgEl = document.getElementById('inspectItemImage');
+            if (imgEl) {
+                imgEl.onerror = function() {
+                    this.onerror = null;
+                    this.src = `${CDN_FALLBACK}${item.texture}`;
+                };
+                imgEl.src = `${CDN_PRIMARY}${item.texture}`;
+            }
+
+            document.getElementById('inspectStackBadge').textContent = item.stack !== "1" ? item.stack : "";
+            document.getElementById('inspectItemTitle').textContent = item.title;
+            document.getElementById('inspectItemId').textContent = item.mcId;
+            document.getElementById('inspectItemEnchants').innerHTML = item.enchants.map(e => `<div>✦ ${e}</div>`).join('');
+            document.getElementById('inspectItemDesc').textContent = item.desc;
+            document.getElementById('inspectAttr1').textContent = item.attr1;
+            document.getElementById('inspectAttr2').textContent = item.attr2;
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+            const num = parseInt(e.key, 10);
+            if (num >= 1 && num <= 9) {
+                selectHotbarSlot(num - 1);
+            }
+        });
+
+        // ==========================================
+        // 6. GLOBAL MINECRAFT ITEM TOOLTIP ENGINE
+        // ==========================================
+        const mcColorMap = {
+            '§0': '#000000', '§1': '#0000aa', '§2': '#00aa00', '§3': '#00aaaa',
+            '§4': '#aa0000', '§5': '#aa00aa', '§6': '#ffaa00', '§7': '#aaaaaa',
+            '§8': '#555555', '§9': '#5555ff', '§a': '#55ff55', '§b': '#55ffff',
+            '§c': '#ff5555', '§d': '#ff55ff', '§e': '#ffff55', '§f': '#ffffff'
+        };
+
+        function formatMinecraftText(raw) {
+            if (!raw) return '';
+            let html = '';
+            let currentColor = '#e5e7eb';
+            let isBold = false;
+            const parts = raw.split(/(§[0-9a-fl-or])/gi);
+            parts.forEach(part => {
+                const lower = part.toLowerCase();
+                if (mcColorMap[lower]) {
+                    currentColor = mcColorMap[lower];
+                } else if (lower === '§l') {
+                    isBold = true;
+                } else if (lower === '§r') {
+                    currentColor = '#e5e7eb';
+                    isBold = false;
+                } else if (part) {
+                    html += `<span style="color:${currentColor};${isBold ? 'font-weight:bold;' : ''}">${escapeHtml(part)}</span>`;
+                }
+            });
+            return html;
+        }
+
+        const tooltipEl = document.getElementById('mcGlobalTooltip');
+        const tooltipTitleEl = document.getElementById('tooltipTitle');
+        const tooltipLoreEl = document.getElementById('tooltipLore');
+
+        function bindDynamicTooltips() {
+            document.querySelectorAll('[data-mc-title]').forEach(el => {
+                if (el.dataset.tooltipBound) return;
+                el.dataset.tooltipBound = 'true';
+
+                el.addEventListener('mouseenter', () => {
+                    const title = el.getAttribute('data-mc-title') || '';
+                    const lore = el.getAttribute('data-mc-lore') || '';
+                    tooltipTitleEl.innerHTML = formatMinecraftText(title);
+                    tooltipLoreEl.innerHTML = lore.split('|').map(line => `<div>${formatMinecraftText(line)}</div>`).join('');
+                    tooltipEl.classList.add('visible');
+                });
+
+                el.addEventListener('mouseleave', () => {
+                    tooltipEl.classList.remove('visible');
+                });
+            });
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            if (!tooltipEl || !tooltipEl.classList.contains('visible')) return;
+            const pad = 16;
+            let x = e.clientX + pad;
+            let y = e.clientY + pad;
+            const rect = tooltipEl.getBoundingClientRect();
+            if (x + rect.width > window.innerWidth - 10) {
+                x = e.clientX - rect.width - pad;
+            }
+            if (y + rect.height > window.innerHeight - 10) {
+                y = e.clientY - rect.height - pad;
+            }
+            tooltipEl.style.transform = `translate3d(${Math.max(8, x)}px, ${Math.max(8, y)}px, 0)`;
+        });
+
+        // ==========================================
+        // 7. NETHER PORTAL & LAVA EMBERS BACKGROUND CANVAS
+        // ==========================================
+        function initNetherEmbers() {
+            const canvas = document.getElementById('netherCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let w, h;
+            const particles = [];
+
+            function resize() {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            const colors = ['#dc2626', '#f97316', '#facc15', '#a855f7', '#ec4899'];
+            for (let i = 0; i < 42; i++) {
+                particles.push({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    size: Math.floor(Math.random() * 4) + 3,
+                    vy: -(Math.random() * 0.75 + 0.25),
+                    vx: (Math.random() - 0.5) * 0.45,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    alpha: Math.random() * 0.5 + 0.15
+                });
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, w, h);
+                for (const p of particles) {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.y < -10) {
+                        p.y = h + 10;
+                        p.x = Math.random() * w;
+                    }
+                    if (p.x < 0) p.x = w;
+                    if (p.x > w) p.x = 0;
+
+                    ctx.globalAlpha = p.alpha;
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(Math.floor(p.x), Math.floor(p.y), p.size, p.size);
+                }
+                requestAnimationFrame(draw);
+            }
+            draw();
+        }
+
+        // ==========================================
+        // INITIALIZE IMMEDIATELY ON LOAD
+        // ==========================================
+        window.addEventListener('DOMContentLoaded', () => {
+            applyCubeTextures(0);
+            renderHotbar();
+            bindDynamicTooltips();
+            initNetherEmbers();
+            queryRealServerStatus(false);
+
+            setInterval(() => {
+                queryRealServerStatus(false);
+            }, 30000);
+        });
+    </script>
+</body>
+</html>
