@@ -9,7 +9,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="tailwind.css">
     <!-- Google Fonts: Pixel & Blocky Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,7 +27,7 @@
             --mc-green: #55ff55;
             --mc-aqua: #55ffff;
             --mc-red: #ff5555;
-            --cdn-primary: url('https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/block/deepslate_bricks.png');
+            --cdn-primary: url('textures/block/deepslate_bricks.png');
         }
 
         * {
@@ -38,7 +38,7 @@
             background-color: var(--mc-bg);
             background-image: 
                 linear-gradient(to bottom, rgba(9, 8, 12, 0.88), rgba(9, 8, 12, 0.94)),
-                url('https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/block/deepslate_bricks.png');
+                url('textures/block/deepslate_bricks.png');
             background-size: cover, 64px 64px;
             background-attachment: fixed;
             image-rendering: pixelated;
@@ -168,7 +168,7 @@
             background-color: #6e6e6e;
             background-image: 
                 linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
-                url('https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/block/stone.png');
+                url('textures/block/stone.png');
             background-size: cover, 32px 32px;
             image-rendering: pixelated;
             border-top: 3px solid #aaaaaa;
@@ -202,7 +202,7 @@
             background-color: #991b1b;
             background-image: 
                 linear-gradient(rgba(153, 27, 27, 0.72), rgba(127, 29, 29, 0.82)),
-                url('https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/block/crimson_planks.png');
+                url('textures/block/crimson_planks.png');
             background-size: cover, 32px 32px;
             border-top: 3px solid #f87171;
             border-left: 3px solid #f87171;
@@ -217,7 +217,7 @@
             background-color: #b45309;
             background-image: 
                 linear-gradient(rgba(180, 83, 9, 0.72), rgba(120, 53, 15, 0.85)),
-                url('https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/block/gilded_blackstone.png');
+                url('textures/block/gilded_blackstone.png');
             background-size: cover, 32px 32px;
             border-top: 3px solid #fde047;
             border-left: 3px solid #fde047;
@@ -235,7 +235,7 @@
             background-color: #1c1b22;
             background-image: 
                 linear-gradient(rgba(22, 21, 28, 0.92), rgba(16, 15, 22, 0.95)),
-                url('https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/block/polished_blackstone.png');
+                url('textures/block/polished_blackstone.png');
             background-size: cover, 48px 48px;
             image-rendering: pixelated;
             border-top: 4px solid #4a4857;
@@ -251,7 +251,7 @@
             background-color: #0b0a0e;
             background-image: 
                 linear-gradient(rgba(8, 7, 12, 0.78), rgba(8, 7, 12, 0.84)),
-                url('https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/block/obsidian.png');
+                url('textures/block/obsidian.png');
             background-size: cover, 48px 48px;
             image-rendering: pixelated;
             border-top: 3px solid #050507;
@@ -445,8 +445,8 @@
     <!-- MINECRAFT ADVANCEMENT TOAST ("Достижение получено!" with real Nether Star texture) -->
     <div id="mcAdvancementToast" class="flex items-center space-x-3.5">
         <div class="w-11 h-11 bg-[#141418] border-2 border-[#3a3a46] flex items-center justify-center shrink-0 mc-enchanted-glint">
-            <img src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/item/nether_star.png"
-                 onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.4/assets/minecraft/textures/item/nether_star.png'"
+            <img src="textures/item/nether_star.png"
+                 onerror="this.onerror=null;this.src='textures/item/nether_star.png'"
                  alt="Nether Star" class="w-8 h-8 pixelated">
         </div>
         <div>
@@ -530,8 +530,8 @@
                         data-mc-title="§6§lСкопировать основной IP"
                         data-mc-lore="§fkochbratan.wellduck.org|§7Резервный: §e213.171.18.152:32086|§aНажми для копирования!"
                         class="mc-btn mc-btn-crimson px-4 py-2.5 font-pixel text-[10px] sm:text-xs tracking-wider flex items-center space-x-2">
-                    <img src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/item/diamond.png"
-                         onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.4/assets/minecraft/textures/item/diamond.png'"
+                    <img src="textures/item/diamond.png"
+                         onerror="this.onerror=null;this.src='textures/item/diamond.png'"
                          alt="" class="w-4 h-4 pixelated">
                     <span>ИГРАТЬ</span>
                 </button>
@@ -613,8 +613,8 @@
                         <div class="flex items-center space-x-4 min-w-0">
                             <!-- Real Vanilla Ender Pearl Texture -->
                             <div class="w-14 h-14 bg-[#121117] border-2 border-[#4a4859] flex items-center justify-center shrink-0 group-hover:border-[#55ffff] transition-colors shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
-                                <img src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/item/ender_pearl.png"
-                                     onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.4/assets/minecraft/textures/item/ender_pearl.png'"
+                                <img src="textures/item/ender_pearl.png"
+                                     onerror="this.onerror=null;this.src='textures/item/ender_pearl.png'"
                                      alt="Ender Pearl" class="w-9 h-9 pixelated">
                             </div>
                             <div class="min-w-0">
@@ -641,8 +641,8 @@
                         <div class="flex items-center space-x-4 min-w-0">
                             <!-- Real Vanilla TNT Texture -->
                             <div class="w-14 h-14 bg-[#121117] border-2 border-[#4a4859] flex items-center justify-center shrink-0 group-hover:border-[#ffaa00] transition-colors shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
-                                <img src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/block/tnt_side.png"
-                                     onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.4/assets/minecraft/textures/block/tnt_side.png'"
+                                <img src="textures/block/tnt_side.png"
+                                     onerror="this.onerror=null;this.src='textures/block/tnt_side.png'"
                                      alt="TNT" class="w-9 h-9 pixelated">
                             </div>
                             <div class="min-w-0">
@@ -673,8 +673,8 @@
                         <!-- Window Header Title like Minecraft "Сетевая игра" -->
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-4 border-b-2 border-[#2c2a38]">
                             <div class="flex items-center space-x-3">
-                                <img src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/item/compass_16.png"
-                                     onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.4/assets/minecraft/textures/item/compass_16.png'"
+                                <img src="textures/item/compass_16.png"
+                                     onerror="this.onerror=null;this.src='textures/item/compass_16.png'"
                                      alt="" class="w-5 h-5 pixelated">
                                 <span class="font-pixel text-xs sm:text-sm text-white drop-shadow-[2px_2px_0_#000]">
                                     СЕТЕВАЯ ИГРА — РЕАЛЬНЫЙ МОНИТОРИНГ
@@ -696,8 +696,8 @@
                                     <!-- 64x64 Pixel Server Icon (Real Vanilla TNT default, replaced if server sends custom favicon) -->
                                     <div class="relative w-16 h-16 bg-[#09090c] border-2 border-[#4a4859] shrink-0 overflow-hidden shadow-[2px_2px_0_#000]">
                                         <img id="liveServerFavicon"
-                                             src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/block/tnt_side.png"
-                                             onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.4/assets/minecraft/textures/block/tnt_side.png'"
+                                             src="textures/block/tnt_side.png"
+                                             onerror="this.onerror=null;this.src='textures/block/tnt_side.png'"
                                              alt="Server Icon" class="w-full h-full object-cover pixelated">
                                     </div>
 
@@ -833,7 +833,7 @@
                             
                             <div class="w-28 h-28 my-3 flex items-center justify-center relative">
                                 <img id="inspectItemImage"
-                                     src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/block/tnt_side.png"
+                                     src="textures/block/tnt_side.png"
                                      alt="Selected Minecraft Item"
                                      class="w-24 h-24 object-contain pixelated drop-shadow-[4px_6px_0_rgba(0,0,0,0.75)] transition-transform duration-150 hover:scale-110">
                             </div>
@@ -912,8 +912,8 @@
                         <div class="flex items-start space-x-4 sm:space-x-5">
                             <!-- Real Vanilla Barrier Texture -->
                             <div class="w-16 h-16 bg-[#240a0d] border-2 border-red-600 flex items-center justify-center shrink-0 shadow-[4px_4px_0_#000]">
-                                <img src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/item/barrier.png"
-                                     onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.4/assets/minecraft/textures/item/barrier.png'"
+                                <img src="textures/item/barrier.png"
+                                     onerror="this.onerror=null;this.src='textures/item/barrier.png'"
                                      alt="Barrier" class="w-11 h-11 pixelated">
                             </div>
                             <div>
@@ -938,8 +938,8 @@
                         <div class="flex items-start space-x-4 sm:space-x-5">
                             <!-- Real Vanilla Redstone Comparator Texture -->
                             <div class="w-16 h-16 bg-[#261607] border-2 border-amber-500 flex items-center justify-center shrink-0 shadow-[4px_4px_0_#000]">
-                                <img src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/item/comparator.png"
-                                     onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.4/assets/minecraft/textures/item/comparator.png'"
+                                <img src="textures/item/comparator.png"
+                                     onerror="this.onerror=null;this.src='textures/item/comparator.png'"
                                      alt="Comparator" class="w-11 h-11 pixelated">
                             </div>
                             <div>
@@ -973,8 +973,8 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-mc text-xs">
                         <div class="bg-[#0e1412]/90 border border-green-900/60 p-4 flex flex-col">
                             <div class="flex items-center space-x-2.5 mb-2">
-                                <img src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/block/tnt_side.png"
-                                     onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.4/assets/minecraft/textures/block/tnt_side.png'"
+                                <img src="textures/block/tnt_side.png"
+                                     onerror="this.onerror=null;this.src='textures/block/tnt_side.png'"
                                      alt="" class="w-6 h-6 pixelated">
                                 <span class="text-[#55ff55] font-bold text-sm">Гриф и Рейды</span>
                             </div>
@@ -982,8 +982,8 @@
                         </div>
                         <div class="bg-[#0e1412]/90 border border-green-900/60 p-4 flex flex-col">
                             <div class="flex items-center space-x-2.5 mb-2">
-                                <img src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/item/end_crystal.png"
-                                     onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.4/assets/minecraft/textures/item/end_crystal.png'"
+                                <img src="textures/item/end_crystal.png"
+                                     onerror="this.onerror=null;this.src='textures/item/end_crystal.png'"
                                      alt="" class="w-6 h-6 pixelated">
                                 <span class="text-[#55ff55] font-bold text-sm">Кристалл PvP</span>
                             </div>
@@ -991,8 +991,8 @@
                         </div>
                         <div class="bg-[#0e1412]/90 border border-green-900/60 p-4 flex flex-col">
                             <div class="flex items-center space-x-2.5 mb-2">
-                                <img src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/item/ender_eye.png"
-                                     onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.4/assets/minecraft/textures/item/ender_eye.png'"
+                                <img src="textures/item/ender_eye.png"
+                                     onerror="this.onerror=null;this.src='textures/item/ender_eye.png'"
                                      alt="" class="w-6 h-6 pixelated">
                                 <span class="text-[#55ff55] font-bold text-sm">Шпионаж и Кланы</span>
                             </div>
@@ -1000,8 +1000,8 @@
                         </div>
                         <div class="bg-[#0e1412]/90 border border-green-900/60 p-4 flex flex-col">
                             <div class="flex items-center space-x-2.5 mb-2">
-                                <img src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures/item/netherite_ingot.png"
-                                     onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.4/assets/minecraft/textures/item/netherite_ingot.png'"
+                                <img src="textures/item/netherite_ingot.png"
+                                     onerror="this.onerror=null;this.src='textures/item/netherite_ingot.png'"
                                      alt="" class="w-6 h-6 pixelated">
                                 <span class="text-[#55ff55] font-bold text-sm">Честная Ванила</span>
                             </div>
@@ -1108,8 +1108,8 @@
          5. Global Floating Minecraft Item Tooltip Engine
          ========================================== -->
     <script>
-        const CDN_PRIMARY = 'https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.20.4/assets/minecraft/textures';
-        const CDN_FALLBACK = 'https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.4/assets/minecraft/textures';
+        const CDN_PRIMARY = 'textures';
+        const CDN_FALLBACK = 'textures';
 
         // ==========================================
         // 1. WEB AUDIO API MINECRAFT SOUND SYNTHESIZER
@@ -1375,6 +1375,19 @@
             const startPerf = performance.now();
 
             const endpoints = [
+                {
+                    name: 'minetools.eu (213.171.18.152)',
+                    url: 'https://api.minetools.eu/ping/213.171.18.152/32086',
+                    parser: (d) => ({
+                        online: Boolean(d && !d.error && d.players),
+                        playersOnline: d?.players?.online ?? 0,
+                        playersMax: d?.players?.max ?? 20,
+                        playersList: (d?.players?.sample || []).map(p => p.name).filter(Boolean),
+                        version: d?.version?.name || 'Java Edition',
+                        motdClean: String(d?.description || '').replace(/§./g, ''),
+                        icon: d?.favicon || null
+                    })
+                },
                 {
                     name: 'mcstatus.io (213.171.18.152)',
                     url: 'https://api.mcstatus.io/v2/status/java/213.171.18.152:32086',
