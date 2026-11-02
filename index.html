@@ -149,6 +149,7 @@ p strong{color:var(--text);font-weight:600}
 .hero__text{position:relative;z-index:1;min-width:0}
 .hero__eyebrow{font:600 .8rem/1 var(--sans);letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:1.4rem}
 .hero h1{
+  display:inline-block;white-space:nowrap;padding:0 .06em .04em 0;
   font-size:var(--step-hero);letter-spacing:.02em;line-height:.86;
   background:linear-gradient(180deg,#fff2ea 0%,#ffb3a6 45%,#e3303c 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
   filter:drop-shadow(0 0 28px rgba(255,40,40,.35)) drop-shadow(0 4px 0 #3a060c);
@@ -167,7 +168,7 @@ p strong{color:var(--text);font-weight:600}
 .fallback button{background:none;border:0;padding:0;color:var(--text);text-decoration:underline dotted;text-underline-offset:3px}
 .hero__boss{position:relative;justify-self:center;width:min(100%,520px)}
 .hero__boss img{width:100%;filter:drop-shadow(0 0 60px rgba(255,30,30,.45)) drop-shadow(0 30px 40px rgba(0,0,0,.7));animation:float 7s ease-in-out infinite}
-.hero__boss figcaption{position:absolute;right:0;bottom:6%;text-align:right;font:700 1.25rem/1.1 var(--serif);color:#ffd2c8}
+.hero__boss figcaption{position:absolute;right:0;bottom:6%;max-width:100%;text-align:right;font:700 1.25rem/1.1 var(--serif);color:#ffd2c8}
 .hero__boss figcaption span{display:block;font:500 .78rem/1.4 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
 @keyframes float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-18px) rotate(1deg)}}
 @media (max-width:860px){
@@ -766,6 +767,22 @@ $$("[data-bind]").forEach(el => {
   if (el.dataset.bind === "address") { el.textContent = ""; v.split(".").forEach((part, i, a) => { el.append(part + (i < a.length - 1 ? "." : "")); if (i < a.length - 1) el.append(document.createElement("wbr")); }); }
   else el.textContent = v;
 });
+
+/* ─── Заголовок первого экрана: подгоняем размер под колонку (градиент через background-clip
+   рисуется только внутри блока, поэтому вылезшие за колонку буквы пропадали бы) ─── */
+(function fitTitle(){
+  const h = $("#heroTitle");
+  if (!h) return;
+  const fit = () => {
+    h.style.fontSize = "";
+    const avail = h.parentElement.clientWidth;
+    const w = h.getBoundingClientRect().width;
+    if (w > avail) h.style.fontSize = (parseFloat(getComputedStyle(h).fontSize) * avail / w * 0.98) + "px";
+  };
+  fit();
+  window.addEventListener("resize", fit, { passive: true });
+  if (document.fonts) document.fonts.ready.then(fit);
+})();
 
 /* ─── Шапка и мобильное меню ─── */
 (function header(){
